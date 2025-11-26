@@ -1,12 +1,12 @@
 cmake_minimum_required(VERSION 3.16)
 
-set(KF_VERSION "6.6.0") # handled by release scripts
-set(KF_DEP_VERSION "6.6.0") # handled by release scripts
+set(KF_VERSION "6.8.0") # handled by release scripts
+set(KF_DEP_VERSION "6.8.0") # handled by release scripts
 project(KGlobalAccel VERSION ${KF_VERSION})
 
 # ECM setup
 include(FeatureSummary)
-find_package(ECM 6.6.0  NO_MODULE)
+find_package(ECM 6.8.0  NO_MODULE)
 set_package_properties(ECM PROPERTIES TYPE REQUIRED DESCRIPTION "Extra CMake Modules." URL "https://commits.kde.org/extra-cmake-modules")
 feature_summary(WHAT REQUIRED_PACKAGES_NOT_FOUND FATAL_ON_MISSING_REQUIRED_PACKAGES)
 
@@ -42,11 +42,7 @@ ecm_setup_version(PROJECT VARIABLE_PREFIX KGLOBALACCEL
 set(REQUIRED_QT_VERSION 6.5.0)
 find_package(Qt6 ${REQUIRED_QT_VERSION} CONFIG REQUIRED DBus Gui Widgets)
 
-set(HAVE_X11 0)
-
-if(X11_FOUND AND XCB_XCB_FOUND)
-    set(HAVE_X11 1)
-endif()
+option(WITH_X11 "Build with X11 support" ON)
 
 ecm_set_disabled_deprecation_versions(
     QT 6.5.0

@@ -1,3 +1,19 @@
+kf6-kglobalaccel (6.8.0-1) unstable; urgency=medium
+
+  [ Aurélien COUDERC ]
+  * New upstream release (6.8.0).
+  * Update build-deps and deps with the info from cmake.
+  * Release to unstable.
+
+ -- Aurélien COUDERC <coucouf@debian.org>  Wed, 04 Dec 2024 11:58:41 +0100
+
+kf6-kglobalaccel (6.7.0-1) experimental; urgency=medium
+
+  * Team upload.
+  * New upstream release.
+
+ -- Simon Quigley <tsimonq2@debian.org>  Sun, 03 Nov 2024 19:29:25 -0600
+
 kf6-kglobalaccel (6.6.0-1) unstable; urgency=medium
 
   [ Aurélien COUDERC ]
