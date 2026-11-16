@@ -1,0 +1,33 @@
+Description: find Qt6 GuiPrivate package explicitly for Qt >= 6.10
+ KF6GlobalAccel links Qt6::GuiPrivate in the WITH_X11 branch. Since
+ Qt 6.10 the private module targets (such as Qt6::GuiPrivate) are
+ split into standalone CMake packages and are no longer created by
+ the main module's find_package call. Without an explicit lookup the
+ CMake generation of kf6-kglobalaccel fails against Qt 6.12 with:
+ .
+   Target "KF6GlobalAccel" links to:
+   Qt6::GuiPrivate
+   but the target was not found.
+ .
+ Add a version-gated find_package(Qt6 REQUIRED COMPONENTS GuiPrivate)
+ right before the target_link_libraries call. Builds against
+ Qt <= 6.9 are unchanged.
+Origin: vendor
+Forwarded: not-needed
+Last-Update: 2026-11-16
+
+--- a/src/CMakeLists.txt
++++ b/src/CMakeLists.txt
+@@ -48,6 +48,12 @@
+ )
+ 
+ if(WITH_X11)
++    # Qt 6.10 起，私有模块目标(如 Qt6::GuiPrivate)拆分为独立的 CMake 包，
++    # 不再随主模块的 find_package 自动创建，需要显式查找，否则 CMake 配置阶段报
++    # "Target ... links to: Qt6::GuiPrivate but the target was not found"。
++    if(Qt6_VERSION VERSION_GREATER_EQUAL 6.10)
++        find_package(Qt6 REQUIRED COMPONENTS GuiPrivate)
++    endif()
+     target_link_libraries(KF6GlobalAccel PRIVATE Qt6::GuiPrivate) # qtx11extras_p.h
+ endif()
+ 
